@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dfont.api_rest.dto.UserDTO;
-import com.dfont.api_rest.service.IUserService;
+import com.dfont.api_rest.dto.UserRecord;
 import com.dfont.api_rest.service.UserServiceImpl;
 
 @RestController
@@ -19,9 +18,10 @@ public class UserController {
 	private UserServiceImpl userService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<UserDTO> getById(@PathVariable Long id){
-		UserDTO userDTO = userService.getById(id);
-		return ResponseEntity.ok(userDTO);
+	public ResponseEntity<UserRecord> getById(@PathVariable Long id){
+		
+		UserRecord userRecord = userService.getById(id);
+		return ResponseEntity.ok(userRecord);
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.dfont.api_rest.dto.UserDTO;
+import com.dfont.api_rest.dto.UserRecord;
 import com.dfont.api_rest.mapper.UserMapper;
 import com.dfont.api_rest.model.User;
 import com.dfont.api_rest.repository.UserRepository;
@@ -21,12 +21,10 @@ public class UserServiceImpl implements IUserService {
 		this.repository = userRepository;
 	}
 
-	public UserDTO getById(Long id) throws IdNullExeption, IdUnexpectedFormatExeption,UserNonExistsExeption {
+	public UserRecord getById(Long id) throws IdNullExeption, IdUnexpectedFormatExeption,UserNonExistsExeption {
 		Optional<User> optUser = Optional.empty();
 		User user;
-		UserDTO userDTO;
 		
-		// System.out.println("Id: " + userDTO.getId() + " Name: " + userDTO.getName());
 		// Comprobaciones del id
 		if(id==null)
 			throw new IdNullExeption("El id no puede ser null");
@@ -44,6 +42,6 @@ public class UserServiceImpl implements IUserService {
 			throw new UserNonExistsExeption("Usuario inexistente");
 		user = optUser.get();
 		
-		return UserMapper.toDTO(user);
+		return UserMapper.toRecord(user);
 	}
 }

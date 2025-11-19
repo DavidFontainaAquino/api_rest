@@ -1,22 +1,22 @@
 package com.dfont.api_rest.mapper;
 
-import com.dfont.api_rest.dto.UserDTO;
+import com.dfont.api_rest.dto.UserRecord;
 import com.dfont.api_rest.model.User;
 
 public class UserMapper {
-	public static UserDTO toDTO(User user) {
-		UserDTO userDTO = new UserDTO(
+	public static UserRecord toRecord(User user) {
+		UserRecord userRecord = new UserRecord(
 				user.getId(),
 				user.getName(),
 				user.getEmail()
 				);
-		return userDTO;
+		return userRecord;
 	}
-	public static User toEntity(UserDTO userDTO) {
+	public static User toEntity(UserRecord userRecord) {
 		User user = new User(
-				userDTO.getId(),
-				userDTO.getName(),
-				userDTO.getEmail()
+				userRecord.id(),
+				userRecord.name(),
+				userRecord.email()
 				);
 		return user;
 	}
