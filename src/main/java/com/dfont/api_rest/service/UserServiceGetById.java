@@ -13,11 +13,11 @@ import com.dfont.api_rest.service.exeptions.IdUnexpectedFormatExeption;
 import com.dfont.api_rest.service.exeptions.UserNonExistsExeption;
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceGetById implements IUserServiceGetById {
 	
 	private final UserRepository repository;
 	
-	public UserServiceImpl(UserRepository userRepository) {
+	public UserServiceGetById(UserRepository userRepository) {
 		this.repository = userRepository;
 	}
 
