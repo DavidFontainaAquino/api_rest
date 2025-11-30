@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dfont.api_rest.dto.UserRequestDTO;
@@ -20,14 +19,16 @@ import com.dfont.api_rest.service.exeptions.UserNonExistsExeption;
 @Service
 public class UserService implements IUserService {
 	
-	@Autowired
 	private UserRepository repository;
+	
+	public UserService(UserRepository repository) {
+		this.repository=repository;
+	}
 	
 	@Override
 	public UserResponseDTO create(UserRequestDTO request) {
 		User usuarioRequest = UserRequestMapper.toEntity(request);
-		User usuarioResponse = repository.save(usuarioRequest);
-		return UserMapper.toRecord(usuarioResponse);
+		return UserMapper.toRecord(repository.save(usuarioRequest));
 	}
 	
 	@Override

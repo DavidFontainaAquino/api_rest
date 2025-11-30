@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,4 +45,17 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
 	}
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<Map<String, Object>> handDataIntegrityViolation(DataIntegrityViolationException ex){
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.put("message", "El mail ingresado ya está registrado");
+        response.put("timestamp", LocalDateTime.now());
+        
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	
 }
