@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.dfont.api_rest.dto.UserRequestDTO;
@@ -26,12 +29,14 @@ public class UserService implements IUserService {
 	}
 	
 	@Override
+	@CachePut(cacheNames = { "usersCacheRedis", "usersCacheCaffeine" }, key = "#result.id")
 	public UserResponseDTO create(UserRequestDTO request) {
 		User usuarioRequest = UserRequestMapper.toEntity(request);
 		return UserMapper.toRecord(repository.save(usuarioRequest));
 	}
 	
 	@Override
+	@Cacheable(cacheNames = { "usersCacheRedis", "usersCacheCaffeine" }, key = "#id")
 	public UserResponseDTO getById(Long id) throws IdNullExeption, IdUnexpectedFormatExeption,UserNonExistsExeption {
 		Optional<User> optUser = Optional.empty();
 		User user;
@@ -68,6 +73,7 @@ public class UserService implements IUserService {
 	}
 	
 	@Override
+	@CachePut(cacheNames = { "usersCacheRedis", "usersCacheCaffeine" }, key = "#id")
 	public UserResponseDTO update(Long id, UserRequestDTO requestDTO) {
 		Optional<User> optUser = Optional.empty();
 		User oldUser;
@@ -100,6 +106,7 @@ public class UserService implements IUserService {
 	}
 	
 	@Override
+	@CacheEvict(cacheNames = { "usersCacheRedis", "usersCacheCaffeine" }, key = "#id")
 	public void delete(Long id) {
 		repository.deleteById(id);
 		return;
